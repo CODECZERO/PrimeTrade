@@ -1,0 +1,20 @@
+node_modules/
+dist/
+
+# Environment variables - ALL env files
+.env
+.env.*
+*.env
+*.env.*
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+.env.backup
+
+*.log
+logs/
+.DS_Store
+.vscode/
+.idea/

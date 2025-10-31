@@ -1,0 +1,38 @@
+# Simplified Render Blueprint
+# Use this if you prefer to create the database manually first
+
+services:
+  # Backend API
+  - type: web
+    name: taskmanager-backend
+    env: docker
+    plan: free
+    dockerfilePath: ./server/Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        sync: false  # You'll need to add this manually from your Render PostgreSQL
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_EXPIRY
+        value: 1d
+      - key: JWT_REFRESH_EXPIRY
+        value: 10d
+      - key: CORS_ORIGIN
+        value: https://taskmanager-frontend.onrender.com  # Update with your frontend URL
+
+  # Frontend
+  - type: web
+    name: taskmanager-frontend
+    env: docker
+    plan: free
+    dockerfilePath: ./frontend/Dockerfile
+    envVars:
+      - key: VITE_API_URL
+        value: https://taskmanager-backend.onrender.com/api/v1  # Update with your backend URL
